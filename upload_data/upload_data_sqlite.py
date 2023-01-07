@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-from database.conections.sqlite import create_db_sqlite
+from database.conections.sqlite import create_db_sqlite, connect_db_sqlite
 
 
 # project path
@@ -63,8 +63,28 @@ def create_db_files_xlsx_and_xls():
     
     return False
 
-    
   
+def connect_db_sqlite():
+  """
+    Connection with database sqlite
+    
+    Returns:
+      Connection
+  """  
+  
+  if check_db_exists():
+  
+    con = connect_db_sqlite(DATA_DIR)
+  
+    if con:
+      print("Database connection sucessfully")
+    
+      return True
+  
+  else:
+    print("Failure connection with database")
+    
+    return False
     
     
   
