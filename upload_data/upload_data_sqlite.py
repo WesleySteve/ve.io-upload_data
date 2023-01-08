@@ -18,7 +18,6 @@ def check_db_exists():
       True: if exists
   """
   
-  
   base_db = [i for i in os.listdir(DATA_DIR) if i.endswith(".db")]
   
   if len(base_db) == 0:
@@ -35,29 +34,30 @@ def create_db_files_xlsx_and_xls():
       Connection
   """
   
-  files = [i for i in os.listdir(DATA_DIR) if i.endswith(".xls") or i.endswith(".xlsx")]
+  if not check_db_exists():
   
-  if len(files) > 0:
-    # open connection
+    files = [i for i in os.listdir(DATA_DIR) if i.endswith(".xls") or i.endswith(".xlsx")]
     
-    con = create_db_sqlite(DATA_DIR, "banco")
-    
-    for i in files:
-      df_tmp = pd.read_excel(os.path.join(DATA_DIR, i))
+    if len(files) > 0:
+      # open connection
       
-      if i.endswith(".xlsx"):
-        name_table = i.strip(".xlsx")
-        df_tmp.to_sql(name_table, con, index=False)
+      con = create_db_sqlite(DATA_DIR, "banco")
+      
+      for i in files:
+        df_tmp = pd.read_excel(os.path.join(DATA_DIR, i))
         
-      elif i.endswith(".xls"):
-        name_table = i.strip(".xls")
-        df_tmp.to_sql(name_table, con, index=False)
-        
-    print("Sqlite database sucessfully created")
+        if i.endswith(".xlsx"):
+          name_table = i.strip(".xlsx")
+          df_tmp.to_sql(name_table, con, index=False)
+          
+        elif i.endswith(".xls"):
+          name_table = i.strip(".xls")
+          df_tmp.to_sql(name_table, con, index=False)
+          
+      print("Sqlite database sucessfully created")
+      
+      return True
     
-    return True
-    
-  
   else:  
     print("The data file was not loadd")
     
