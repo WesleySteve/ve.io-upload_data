@@ -5,11 +5,11 @@ from database.conections.sqlite import create_db_sqlite, connect_db_sqlite
 
 
 # project path
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-DATA_DIR = os.path.join(BASE_DIR, "data")
+# DATA_DIR = os.path.join(BASE_DIR, "data")
 
-def check_db_exists():
+def check_db_exists(data_dir):
   """
     Check database file '.db'
     
@@ -18,7 +18,7 @@ def check_db_exists():
       True: if exists
   """
   
-  base_db = [i for i in os.listdir(DATA_DIR) if i.endswith(".db")]
+  base_db = [i for i in os.listdir(data_dir) if i.endswith(".db")]
   
   if len(base_db) == 0:
     return False
@@ -26,7 +26,7 @@ def check_db_exists():
     return True
   
 
-def create_db_files_xlsx_and_xls():
+def create_db_files_xlsx_and_xls(data_dir):
   """
     Create Sqlite database with '.xls' and '.xlsx' files
     
@@ -34,17 +34,17 @@ def create_db_files_xlsx_and_xls():
       Connection
   """
   
-  if not check_db_exists():
+  if not check_db_exists(data_dir=data_dir):
   
-    files = [i for i in os.listdir(DATA_DIR) if i.endswith(".xls") or i.endswith(".xlsx")]
+    files = [i for i in os.listdir(data_dir) if i.endswith(".xls") or i.endswith(".xlsx")]
     
     if len(files) > 0:
       # open connection
       
-      con = create_db_sqlite(DATA_DIR, "banco")
+      con = create_db_sqlite(data_dir, "banco")
       
       for i in files:
-        df_tmp = pd.read_excel(os.path.join(DATA_DIR, i))
+        df_tmp = pd.read_excel(os.path.join(data_dir, i))
         
         if i.endswith(".xlsx"):
           name_table = i.strip(".xlsx")
@@ -64,7 +64,7 @@ def create_db_files_xlsx_and_xls():
     return False
 
   
-def connect_db_sqlite():
+def connect_db_sqlite(data_dir):
   """
     Connection with database sqlite
     
@@ -72,9 +72,9 @@ def connect_db_sqlite():
       Connection
   """  
   
-  if check_db_exists():
+  if check_db_exists(data_dir=data_dir):
   
-    con = connect_db_sqlite(DATA_DIR)
+    con = connect_db_sqlite(data_dir)
   
     if con:
       print("Database connection sucessfully")
