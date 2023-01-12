@@ -58,14 +58,16 @@ def create_db_files_xlsx_and_xls(data_dir, file_name=None):
         
         if file_name == 'DADOS.xlsx' or file_name == 'DADOS.xls':
           df_tmp = pd.read_excel(pathfull)
-        
-          if file_name.endswith(".xlsx"):
-            name_table = file_name.strip(".xlsx")
-            df_tmp.to_sql(name_table, con, index=False)
           
-          elif file_name.endswith(".xls"):
-            name_table = file_name.strip(".xls")
-            df_tmp.to_sql(name_table, con, index=False)
+          print(df_tmp.head())
+        
+          # if file_name.endswith(".xlsx"):
+          #   name_table = file_name.strip(".xlsx")
+          #   df_tmp.to_sql(name_table, con, index=False)
+          # 
+          # elif file_name.endswith(".xls"):
+          #   name_table = file_name.strip(".xls")
+          #   df_tmp.to_sql(name_table, con, index=False)
           
         print("Sqlite database sucessfully created")
         
