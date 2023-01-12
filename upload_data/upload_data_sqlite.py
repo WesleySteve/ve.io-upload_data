@@ -20,8 +20,9 @@ def check_db_exists(data_dir):
   
   base_db = [i for i in os.listdir(data_dir) if i.endswith(".db")]
   
-  if len(base_db) == 0:
+  if len(base_db) == 1:
     return True
+  
   else:
     return False
   
@@ -37,14 +38,20 @@ def create_db_files_xlsx_and_xls(data_dir, file_name=None):
   if not check_db_exists(data_dir=data_dir):
   
     # files = [i for i in os.listdir(data_dir) if i.endswith(".xls") or i.endswith(".xlsx")]
-    if file_name != None:
+    if file_name == None:
+      print("The data file was not load")
+      
+      return False
     
-      if len(file_name) > 0:
+    else:
+      
+    
+     # if len(file_name) > 0:
         # open connection
         
-        pathfull = os.path.join(data_dir, file_name)
+      #  pathfull = os.path.join(data_dir, file_name)
       
-        con = create_db_sqlite(pathfull, "banco")
+        con = create_db_sqlite(data_dir, "banco")
       
         for i in file_name:
           df_tmp = pd.read_excel(os.path.join(data_dir, i))
@@ -58,13 +65,8 @@ def create_db_files_xlsx_and_xls(data_dir, file_name=None):
             df_tmp.to_sql(name_table, con, index=False)
           
         print("Sqlite database sucessfully created")
-      
-      return True
-    
-  else:  
-    print("The data file was not load")
-    
-    return False
+        
+        return True
 
   
 def connect_db_sqlite(data_dir):
@@ -84,10 +86,10 @@ def connect_db_sqlite(data_dir):
     
       return True
   
-  else:
-    print("Failure connection with database")
+    else:
+      print("Failure connection with database")
     
-    return False
+      return False
     
     
   
