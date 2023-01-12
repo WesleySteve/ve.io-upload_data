@@ -45,7 +45,7 @@ def create_db_files_xlsx_and_xls(data_dir, file_name=None):
     
     else:
       
-      if len(file_name) > 0:
+    #  if len(file_name) > 0:
         
         # open connection
         
