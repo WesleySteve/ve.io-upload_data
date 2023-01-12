@@ -49,21 +49,22 @@ def create_db_files_xlsx_and_xls(data_dir, file_name=None):
         
         # open connection
         
-      #  pathfull = os.path.join(data_dir, file_name)
+        pathfull = os.path.join(data_dir, file_name)
       
         con = create_db_sqlite(data_dir, "banco")
       
-        # for i in file_name:
+        #for i in pathfull:
+         # df_tmp = pd.read_excel(os.path.join(data_dir, i))
+        
         if file_name == 'DADOS.xlsx' or file_name == 'DADOS.xls':
-          df_tmp = pd.read_excel(file_name)
-          # df_tmp = pd.read_excel(os.path.join(data_dir, i))
+          df_tmp = pd.read_excel(pathfull)
         
           if file_name.endswith(".xlsx"):
-            name_table = i.strip(".xlsx")
+            name_table = file_name.strip(".xlsx")
             df_tmp.to_sql(name_table, con, index=False)
           
           elif file_name.endswith(".xls"):
-            name_table = i.strip(".xls")
+            name_table = file_name.strip(".xls")
             df_tmp.to_sql(name_table, con, index=False)
           
         print("Sqlite database sucessfully created")
