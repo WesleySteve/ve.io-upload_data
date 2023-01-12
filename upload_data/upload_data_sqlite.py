@@ -41,8 +41,10 @@ def create_db_files_xlsx_and_xls(data_dir, file_name=None):
     
       if len(file_name) > 0:
         # open connection
+        
+        pathfull = os.path.join(data_dir, file_name)
       
-        con = create_db_sqlite(data_dir, "banco")
+        con = create_db_sqlite(pathfull, "banco")
       
         for i in file_name:
           df_tmp = pd.read_excel(os.path.join(data_dir, i))
