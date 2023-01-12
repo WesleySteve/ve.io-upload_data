@@ -49,7 +49,7 @@ def create_db_files_xlsx_and_xls(data_dir, file_name=None):
         
         # open connection
         
-        pathfull = os.path.join(data_dir, file_name)
+        # pathfull = os.path.join(data_dir, file_name)
       
         con = create_db_sqlite(data_dir, "banco")
       
@@ -57,7 +57,7 @@ def create_db_files_xlsx_and_xls(data_dir, file_name=None):
          # df_tmp = pd.read_excel(os.path.join(data_dir, i))
         
         if file_name == 'DADOS.xlsx' or file_name == 'DADOS.xls':
-          df_tmp = pd.read_excel(pathfull)
+          df_tmp = pd.read_excel(os.path.join(data_dir, file_name))
           
           print(df_tmp.head())
         
