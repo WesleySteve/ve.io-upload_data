@@ -14,19 +14,19 @@ def check_db_exists(data_dir):
     Check database file '.db'
     
     Returns:
-      False: if not exists
       True: if exists
+      False: if not exists
   """
   
   base_db = [i for i in os.listdir(data_dir) if i.endswith(".db")]
   
-  if len(base_db) == 0:
-    return False
-  else:
+  if len(base_db) > 0:
     return True
+  else:
+    return False
   
 
-def create_db_files_xlsx_and_xls(data_dir):
+def create_db_files_xlsx_and_xls(data_dir, file_name=None):
   """
     Create Sqlite database with '.xls' and '.xlsx' files
     
@@ -36,30 +36,31 @@ def create_db_files_xlsx_and_xls(data_dir):
   
   if not check_db_exists(data_dir=data_dir):
   
-    files = [i for i in os.listdir(data_dir) if i.endswith(".xls") or i.endswith(".xlsx")]
+    # files = [i for i in os.listdir(data_dir) if i.endswith(".xls") or i.endswith(".xlsx")]
+    if file_name != None:
     
-    if len(files) > 0:
-      # open connection
+      if len(file_name) > 0:
+        # open connection
       
-      con = create_db_sqlite(data_dir, "banco")
+        con = create_db_sqlite(data_dir, "banco")
       
-      for i in files:
-        df_tmp = pd.read_excel(os.path.join(data_dir, i))
+        for i in file_name:
+          df_tmp = pd.read_excel(os.path.join(data_dir, i))
         
-        if i.endswith(".xlsx"):
-          name_table = i.strip(".xlsx")
-          df_tmp.to_sql(name_table, con, index=False)
+          if i.endswith(".xlsx"):
+            name_table = i.strip(".xlsx")
+            df_tmp.to_sql(name_table, con, index=False)
           
-        elif i.endswith(".xls"):
-          name_table = i.strip(".xls")
-          df_tmp.to_sql(name_table, con, index=False)
+          elif i.endswith(".xls"):
+            name_table = i.strip(".xls")
+            df_tmp.to_sql(name_table, con, index=False)
           
-      print("Sqlite database sucessfully created")
+        print("Sqlite database sucessfully created")
       
       return True
     
   else:  
-    print("The data file was not loadd")
+    print("The data file was not load")
     
     return False
 
