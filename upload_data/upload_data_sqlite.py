@@ -20,7 +20,7 @@ def check_db_exists(data_dir):
   
   base_db = [i for i in os.listdir(data_dir) if i.endswith(".db")]
   
-  if len(base_db) > 0:
+  if len(base_db) == 0:
     return True
   else:
     return False
