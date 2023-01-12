@@ -53,14 +53,16 @@ def create_db_files_xlsx_and_xls(data_dir, file_name=None):
       
         con = create_db_sqlite(data_dir, "banco")
       
-        for i in file_name:
-          df_tmp = pd.read_excel(os.path.join(data_dir, i))
+        # for i in file_name:
+        if file_name == 'DADOS.xlsx' or file_name == 'DADOS.xls':
+          df_tmp = pd.read_excel(file_name)
+          # df_tmp = pd.read_excel(os.path.join(data_dir, i))
         
-          if i.endswith(".xlsx"):
+          if file_name.endswith(".xlsx"):
             name_table = i.strip(".xlsx")
             df_tmp.to_sql(name_table, con, index=False)
           
-          elif i.endswith(".xls"):
+          elif file_name.endswith(".xls"):
             name_table = i.strip(".xls")
             df_tmp.to_sql(name_table, con, index=False)
           
