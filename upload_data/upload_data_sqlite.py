@@ -28,7 +28,7 @@ def check_db_exists(data_dir):
     return False
   
 
-def create_db_files_xlsx_and_xls(data_dir, file_name=None):
+def create_db_files_xlsx_or_xls(data_dir, file_name=None):
   """
     Create Sqlite database with '.xls' and '.xlsx' files
     
@@ -36,55 +36,49 @@ def create_db_files_xlsx_and_xls(data_dir, file_name=None):
       Connection
   """
   
-  if not check_db_exists(data_dir=data_dir):
-  
-
-    if file_name == None:
-      print("The data file was not load")
-      
-      return False
+  if check_db_exists(data_dir=data_dir):
     
-    else:
+    # open connection
+    
+    con = connect_db_sqlite(db_path=data_dir)
+    
+    df_tmp = pd.read_excel(os.path.join(data_dir, file_name))
+      
+    if file_name.endswith(".xlsx"):
+          name_table = file_name.strip(".xlsx")
+          df_tmp.to_sql(name_table, con, index=False)
         
-        # open connection
+    elif file_name.endswith(".xls"):
+          name_table = file_name.strip(".xls")
+          df_tmp.to_sql(name_table, con, index=False)
         
-        con = create_db_sqlite(data_dir, "banco")
+    print("Sqlite database sucessfully updated")
+      
+    return True 
+    
+      
+  else:
+    
+    # open connection
+      
+      con = create_db_sqlite(data_dir, "banco")
+      
+      # if file_name == 'DADOS.xlsx' or file_name == 'DADOS.xls':
+      df_tmp = pd.read_excel(os.path.join(data_dir, file_name))
+      
+      if file_name.endswith(".xlsx"):
+          name_table = file_name.strip(".xlsx")
+          df_tmp.to_sql(name_table, con, index=False)
         
-        if file_name == 'DADOS.xlsx' or file_name == 'DADOS.xls':
-          df_tmp = pd.read_excel(os.path.join(data_dir, file_name))
+      elif file_name.endswith(".xls"):
+          name_table = file_name.strip(".xls")
+          df_tmp.to_sql(name_table, con, index=False)
         
-          if file_name.endswith(".xlsx"):
-            name_table = file_name.strip(".xlsx")
-            df_tmp.to_sql(name_table, con, index=False)
-          
-          elif file_name.endswith(".xls"):
-            name_table = file_name.strip(".xls")
-            df_tmp.to_sql(name_table, con, index=False)
-          
-        print("Sqlite database sucessfully created")
+      print("Sqlite database sucessfully created")
+      
+      return True
+     
+    
         
-        return True
+    
 
-  
-# def connect_db_sqlite(data_dir):
-#   """
-#     Connection with database sqlite
-#     
-#     Returns:
-#       Connection
-#   """  
-#   
-#   if check_db_exists(data_dir=data_dir):
-#   
-#     con = connect_db_sqlite(data_dir)
-#   
-#     if con:
-#       print("Database connection sucessfully")
-#     
-#       return True
-#   
-#     else:
-#       print("Failure connection with database")
-#     
-#       return False
-#     
