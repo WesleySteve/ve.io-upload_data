@@ -106,18 +106,20 @@ def create_db_user(data_dir):
       
       con = create_db_sqlite(data_dir, "banco")
       
-      # if file_name == 'DADOS.xlsx' or file_name == 'DADOS.xls':
-      # df_tmp = pd.read_excel(os.path.join(data_dir, file_name))
       
-      query = pd.read_sql_query = '''
-                                CREATE TABLE IF NOT EXISTS USERS 
-                                  (
-                                    ID INTEGER PRIMARY KEY AUTOINCREMENT, 
-                                    NAME VARCHAR(100) NOT NULL,
-                                    USER_NAME VARCHAR(50) NOT NULL,
-                                    PASSWORD VARCHAR(64) NOT NULL
-                                  )
-                                ''', con, False
+      query = '''
+              CREATE TABLE IF NOT EXISTS USERS 
+              (
+                ID INTEGER PRIMARY KEY AUTOINCREMENT, 
+                NAME VARCHAR(100) NOT NULL,
+                USER_NAME VARCHAR(50) NOT NULL,
+                PASSWORD VARCHAR(64) NOT NULL
+              )
+            '''
+            
+      df = pd.read_sql_query(query)
+      
+      df.to_sql('Users', con, index=False)
                                 
       
       print("Sqlite database sucessfully created")
