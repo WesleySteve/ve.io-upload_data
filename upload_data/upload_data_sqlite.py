@@ -111,16 +111,16 @@ def create_db_user(data_dir):
               CREATE TABLE IF NOT EXISTS USERS 
               (
                 ID INTEGER PRIMARY KEY AUTOINCREMENT, 
-                NAME VARCHAR(100) NOT NULL,
-                USER_NAME VARCHAR(50) NOT NULL,
-                PASSWORD VARCHAR(64) NOT NULL,
+                NOME VARCHAR(100) NOT NULL,
+                LOGIN VARCHAR(50) NOT NULL,
+                SENHA VARCHAR(32) NOT NULL,
                 RE VARCHAR(32) NULL
               )
             '''
             
-      df = pd.read_sql(query, con)
+      df = pd.read_sql_query(sql=query, con=con, index_col=False)
       
-      df.to_sql('Users', con)
+      df.to_sql(name='usuario', con=con)
                                 
       
       print("Sqlite database sucessfully created")
