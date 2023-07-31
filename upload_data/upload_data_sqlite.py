@@ -89,19 +89,8 @@ def create_db_user(data_dir):
       Connection
   """
   
-  if check_db_exists(data_dir=data_dir):
-    
-    # open connection
-    
-    con = connect_db_sqlite(db_path=data_dir)
-        
-    print("Sqlite database sucessfully connected")
-      
-    return True 
-    
-      
-  else:
-    
+  if not check_db_exists(data_dir=data_dir):
+     
     # open connection
       
       con = create_db_sqlite(data_dir, "banco")
@@ -125,7 +114,18 @@ def create_db_user(data_dir):
       
       print("Sqlite database sucessfully created")
       
-      return True
+      return con
+      
+    
+  else:
+    
+     # open connection
+    
+    con = connect_db_sqlite(db_path=data_dir)
+        
+    print("Sqlite database sucessfully connected")
+      
+    return con
      
         
     
