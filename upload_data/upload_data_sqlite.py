@@ -113,13 +113,14 @@ def create_db_user(data_dir):
                 ID INTEGER PRIMARY KEY AUTOINCREMENT, 
                 NAME VARCHAR(100) NOT NULL,
                 USER_NAME VARCHAR(50) NOT NULL,
-                PASSWORD VARCHAR(64) NOT NULL
+                PASSWORD VARCHAR(64) NOT NULL,
+                RE VARCHAR(32) NULL
               )
             '''
             
-      df = pd.read_sql_query(query)
+      df = pd.read_sql(query, con)
       
-      df.to_sql('Users', con, index=False)
+      df.to_sql('Users', con)
                                 
       
       print("Sqlite database sucessfully created")
